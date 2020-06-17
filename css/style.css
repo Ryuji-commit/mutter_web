@@ -1,0 +1,23 @@
+.chat-message {
+    display: inline-block;
+    position: relative; 
+    margin: 12px;
+    padding: 15px 13px;
+    border-radius: 12px;
+    background: #fff0c6;
+}
+
+.chat-message:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 18px; 
+    left: -24px;
+    border: 12px solid transparent;
+    border-right: 12px solid #fff0c6;
+}
+
+.chat-message p {
+    margin: 0;
+    padding: 0;
+}
