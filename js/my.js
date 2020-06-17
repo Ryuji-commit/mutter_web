@@ -1,17 +1,23 @@
 const peer = new Peer({
     key: 'cfd485e7-65de-4b3d-8c50-f149c695607d',
-    debug: 3
+    debug: 3,
 });
 
-let room = null;
 $(function(){
-    room = peer.joinRoom('roomname', {mode: 'sfu'});
+    if (!peer.open) {
+        console.log('Not open');
+        return;
+    }
 
+    const room = peer.joinRoom('roomName',{
+        mode: 'sfu',
+    });
     // チャット送信
     $('#submit').on('click', function() {
         var msg = $("#textarea1").val();
         $("#textarea1").val('');
         room.send(msg);
+        console.log(msg);
     });
 
     // チャット受信
@@ -25,6 +31,7 @@ $(function(){
 
         var insert_html = $('<div class="chat-message"><p>' + msg + '</p></div>').hide().fadeIn(500).offset({ top: top, left: left }).delay(10000).fadeOut('slow');
         $("#screen").append(insert_html);
+        console.log(msg);
     });
 
 });
