@@ -21,7 +21,7 @@ $(function(){
 });
 
 $('#submit').on('click', function() {
-    msg = document.getElementById("#textarea1").value
+    msg = document.getElementById("#textarea1").value;
     connection.send(msg);
     console.log(msg);
 });
