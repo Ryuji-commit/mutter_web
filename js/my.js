@@ -11,7 +11,7 @@ $(function(){
 
     connection.onmessage = function(e) {
         let msg = e.data;
-        document.getElementById("#screen").value = msg;
+        document.getElementById("#screen").text(msg);
     };
 
     connection.onclose = function() {
