@@ -3,6 +3,7 @@ const peer = new Peer({
     debug: 3
 });
 
+let room = null;
 $(function(){
     room = peer.joinRoom('roomname', {mode: 'sfu'});
 
@@ -25,5 +26,5 @@ $(function(){
         var insert_html = $('<div class="chat-message"><p>' + msg + '</p></div>').hide().fadeIn(500).offset({ top: top, left: left }).delay(10000).fadeOut('slow');
         $("#screen").append(insert_html);
     });
-    
+
 });
