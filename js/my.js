@@ -12,6 +12,7 @@ $(function(){
     connection.onmessage = function(e) {
         let msg = e.data;
         document.getElementById("#textarea1").value += msg;
+        console.log(msg)
     };
 
     connection.onclose = function() {
