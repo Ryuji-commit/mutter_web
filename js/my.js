@@ -2,7 +2,7 @@ $(function(){
     connection = new WebSocket('wss://echo.websocket.org');
 
     connection.onopen = function(e) {
-        console.log("コネクションを開始しまいた。");
+        console.log("コネクションを開始しました。");
     };
 
     connection.onerror = function(error) {
