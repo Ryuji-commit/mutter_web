@@ -11,8 +11,7 @@ $(function(){
 
     connection.onmessage = function(e) {
         let msg = e.data;
-        document.getElementById("#screen").text(msg);
-        console.log(msg);
+        $("#screen").text(msg);
     };
 
     connection.onclose = function() {
@@ -21,7 +20,6 @@ $(function(){
 });
 
 $('#submit').on('click', function() {
-    msg = document.getElementById("#textarea1").value;
+    var msg = $("#textarea1").val();
     connection.send(msg);
-    console.log(msg);
 });
