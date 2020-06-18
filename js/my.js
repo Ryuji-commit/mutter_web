@@ -6,10 +6,6 @@ let room = null;
 
 peer.on('open', function(){
     console.log('connected');   
-    room = peer.joinRoom('roomName',{
-        mode: 'sfu',
-    }); 
-
     joinedRoom();
 });
 
@@ -22,17 +18,31 @@ peer.on('close', function(){
 });
 
 function joinedRoom(){
-    //　チャット送信
-    $('#submit').on('click', function() {
-        var msg = $("#textarea1").val();
-        $("#textarea1").val('');
-        room.send(msg);
-        console.log(msg);
+    room = peer.joinRoom('roomName',{
+        mode: 'sfu',
+    });
+
+    // 新たな人が入室
+    room.on('peerJoin', peerId => {
+        console.log('new user');
+    });
+
+    // 人が離れる
+    room.on('peerLeave', peerId => {
+        console.log('leave user');
+    });
+
+    // ログを受信
+    room.once('log', logs => {
+        for (const logStr of logs) {
+          const { messageType, message, timestamp } = JSON.parse(logStr);
+          console.log(message);
+        }
     });
 
     // チャット受信
-    room.on('data', function(data){
-        var msg = data.data;
+    room.on('data', ({ data, src }) => {
+        var msg = data;
 
         var top_max = $(window).height()*0.7;
         var left_max = $(window).width()*0.9;
@@ -42,5 +52,12 @@ function joinedRoom(){
         var insert_html = $('<div class="chat-message"><p>' + msg + '</p></div>').hide().fadeIn(500).offset({ top: top, left: left }).delay(10000).fadeOut('slow');
         $("#screen").append(insert_html);
         console.log(msg);
+    });
+
+    //　チャット送信
+    $('#submit').on('click', function() {
+        var msg = $("#textarea1").val();
+        $("#textarea1").val('');
+        room.send(msg);
     });
 }
