@@ -2,17 +2,27 @@ const peer = new Peer({
     key: 'cfd485e7-65de-4b3d-8c50-f149c695607d',
     debug: 3,
 });
+let room = null;
 
-$(function(){
-    if (!peer.open) {
-        console.log('Not open');
-        return;
-    }
-
-    const room = peer.joinRoom('roomName',{
+peer.on('open', function(){
+    console.log('connected');   
+    room = peer.joinRoom('roomName',{
         mode: 'sfu',
-    });
-    // チャット送信
+    }); 
+
+    joinedRoom();
+});
+
+peer.on('error', function(err){
+    console.log(err.message);
+});
+
+peer.on('close', function(){
+    console.log('closed');
+});
+
+function joinedRoom(){
+    //　チャット送信
     $('#submit').on('click', function() {
         var msg = $("#textarea1").val();
         $("#textarea1").val('');
@@ -33,5 +43,4 @@ $(function(){
         $("#screen").append(insert_html);
         console.log(msg);
     });
-
-});
+}
