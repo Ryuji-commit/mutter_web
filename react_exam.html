@@ -19,7 +19,8 @@
       }
 
       const today = new Date();
-      const hwElement = <HelloWorld date={today}/>;
+      let today_tostring = today.toString();
+      const hwElement = <HelloWorld date={today_tostring}/>;
       ReactDOM.render(hwElement,
         document.getElementById('row1'));
 
