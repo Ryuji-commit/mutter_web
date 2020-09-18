@@ -11,20 +11,19 @@
 
     <script type="text/babel">
 
-        class HelloMessage extends React.Component {
-            render() {
-                return (
-                    <div>
-                        Hello {this.props.name}
-                    </div>
-                );
-            }
+      class HelloWorld extends React.Component {
+        render() {
+          return <div>Hello World {this.props.name}</div>;
         }
+      }
 
-        ReactDOM.render(
-            <HelloMessage name="Taylor" />,
-            document.getElementById('hello-example')
-        );
+      const hwElement = <HelloWorld name="01" />;
+      ReactDOM.render(hwElement,
+        document.getElementById('app01'));
+
+      const hwFactory = React.createFactory(HelloWorld);
+      ReactDOM.render(hwFactory({name: '02'}),
+        document.getElementById('app02'));
 
     </script>
 
