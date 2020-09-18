@@ -61,3 +61,16 @@ function insertmsg(msg){
     var insert_html = $('<div class="chat-message"><p>' + msg + '</p></div>').hide().fadeIn(500).offset({ top: top, left: left }).delay(10000).fadeOut('slow');
     $("#screen").append(insert_html);
 }
+
+$(function(){
+	//テキストエリアがアクティブの状態にキーが押されたらイベントを発火
+	$('#textarea1').keydown(function(e){
+		//押されたキー（e.keyCode）が13（Enter）か　そしてテキストエリアに何かが入力されているか判定
+        if(e.keyCode === 13 && $(this).val()){
+            //フォームを送信
+            $('#submit').submit();
+            return false;
+          }
+    });
+});
+
