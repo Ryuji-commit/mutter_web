@@ -65,7 +65,7 @@ function insertmsg(msg){
 
 function transition(msg){
     if (msg == 'React') {
-        window.location.href = '../react_exam.html';
+        window.location.href = 'https://ryuji-commit.github.io/mutter_web/react_exam.html';
     }
 }
 
