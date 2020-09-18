@@ -6,24 +6,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   </head>
   <body>
-    <div id="app01"></div>
-    <div id="app02"></div>
+    <div id="row1"></div>
 
     <script type="text/babel">
 
       class HelloWorld extends React.Component {
         render() {
-          return <div>Hello World {this.props.name}</div>;
+            return (
+                <div>Today : {this.props.date}</div>
+            );
         }
       }
 
-      const hwElement = <HelloWorld name="01" />;
+      const today = new Date();
+      const hwElement = <HelloWorld date={today}/>;
       ReactDOM.render(hwElement,
-        document.getElementById('app01'));
-
-      const hwFactory = React.createFactory(HelloWorld);
-      ReactDOM.render(hwFactory({name: '02'}),
-        document.getElementById('app02'));
+        document.getElementById('row1'));
 
     </script>
 
