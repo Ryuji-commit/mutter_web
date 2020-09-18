@@ -68,7 +68,7 @@ $(function(){
 		//押されたキー（e.keyCode）が13（Enter）か　そしてテキストエリアに何かが入力されているか判定
         if(e.keyCode === 13 && $(this).val()){
             //フォームを送信
-            $('#submit').submit();
+            $('#submit').click();
             return false;
           }
     });
