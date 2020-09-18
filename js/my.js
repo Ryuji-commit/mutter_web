@@ -65,7 +65,7 @@ function insertmsg(msg){
 
 function transition(msg){
     if (msg == 'React') {
-        window.location.href = 'https://www.google.com/?hl=ja';
+        window.location.href = '../react_exam.html';
     }
 }
 
