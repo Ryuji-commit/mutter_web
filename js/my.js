@@ -49,6 +49,7 @@ function joinedRoom(){
         $("#textarea1").val('');
         room.send(msg);
         insertmsg(msg);
+        transition(msg);
     });
 }
 
@@ -60,6 +61,12 @@ function insertmsg(msg){
 
     var insert_html = $('<div class="chat-message"><p>' + msg + '</p></div>').hide().fadeIn(500).offset({ top: top, left: left }).delay(10000).fadeOut('slow');
     $("#screen").append(insert_html);
+}
+
+function transition(msg){
+    if (msg == 'React') {
+        window.location.href = 'https://www.google.com/?hl=ja';
+    }
 }
 
 $(function(){
