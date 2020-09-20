@@ -19,7 +19,7 @@
         setnow() {
           const today = new Date();
           let today_tostring = today.toString();
-          this.setstate(state => ({
+          this.setState(state => ({
             datetime: today_tostring,
           }));
         }
