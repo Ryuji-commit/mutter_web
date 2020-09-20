@@ -13,14 +13,14 @@
       class Timer extends React.Component {
         constructor(props) {
           super(props);
-          this.state = { datetime: "now" }
+          this.state = { 
+            datetime: new Date(), 
+          };
         }
 
         setnow() {
-          const today = new Date();
-          let today_tostring = today.toString();
           this.setState(state => ({
-            datetime: today_tostring,
+            datetime: new Date(),
           }));
         }
 
@@ -34,7 +34,7 @@
 
         render() {
             return (
-                <div>now : {this.state.datetime}</div>
+                <div>now : {this.state.datetime.toString()}</div>
             );
         }
       }
