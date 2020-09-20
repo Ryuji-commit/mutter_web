@@ -10,19 +10,39 @@
 
     <script type="text/babel">
 
-      class HelloWorld extends React.Component {
+      class Timer extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = { datetime: "now" }
+        }
+
+        setnow() {
+          const today = new Date();
+          let today_tostring = today.toString();
+          this.setstate(state => ({
+            datetime: today_tostring,
+          }));
+        }
+
+        ComponentDidMount() {
+          this.interval = setInterval(() => )
+        }
+
+        componentWillUnmount() {
+          clearInterval(this.interval);
+        }
+
         render() {
             return (
-                <div>Today : {this.props.date}</div>
+                <div>now : {this.state.datetime}</div>
             );
         }
       }
 
-      const today = new Date();
-      let today_tostring = today.toString();
-      const hwElement = <HelloWorld date={today_tostring}/>;
-      ReactDOM.render(hwElement,
-        document.getElementById('row1'));
+      ReactDOM.render(
+        <Timer />,
+        document.getElementById('row1')
+      );
 
     </script>
 
