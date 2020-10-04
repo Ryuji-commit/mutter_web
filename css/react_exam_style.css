@@ -38,3 +38,7 @@ button.square:focus {
 input[name="squares"] {
     margin-bottom: 20px;
 }
+
+button.submit-button {
+    margin-left: 5px;
+}

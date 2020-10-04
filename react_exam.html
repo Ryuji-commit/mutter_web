@@ -38,16 +38,20 @@
           super(props);
           this.state = { 
             squares: 5, 
+            temp: 5,
           };
+          this.handleChange = this.handleChange.bind(this);
+          this.handleSubmit = this.handleSubmit.bind(this);
         }
 
         render() {
           return(
             <div className="board">
-              <form>
+              <form onSubmit={this.handleSubmit}>
                 <label>幅 : </label>
-                <input type="number" name="squares" value={this.state.squares} min="5" max="20" 
-                  onChange={(e) => this.setState({squares: parseInt(e.target.value)})}/>
+                <input type="number" name="squares" value={this.state.temp} min="5" max="20" 
+                  onChange={this.handleChange}/>
+                <button className="submit-button">決定</button>
               </form>
             {
               Array(this.state.squares).fill(0).map((val, i) => {
@@ -66,6 +70,29 @@
             }  
             </div>
           );
+        }
+
+        handleChange(e) {
+          this.setState({temp: e.target.value});
+        }
+
+        handleSubmit(e) {
+          e.preventDefault();
+          let inputval;
+          if (!this.state.temp) {
+            inputval = 5;
+          }else {
+            inputval = parseInt(this.state.temp);
+          }
+
+          if (inputval < 5) {
+            inputval = 5;
+          }
+
+          if (inputval > 20) {
+            inputval = 20;
+          }
+          this.setState({squares: inputval});
         }
       }
 
