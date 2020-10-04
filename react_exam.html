@@ -4,43 +4,73 @@
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+    <link rel="stylesheet" href="css/react_exam_style.css">
   </head>
   <body>
     <div id="row1"></div>
 
     <script type="text/babel">
 
-      class Timer extends React.Component {
+      class Square extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            isactive: false,
+          }
+          this.changeActive = this.changeActive.bind(this);
+        }
+
+        changeActive() {
+          this.setState({
+            isactive: !this.state.isactive,
+          });
+        }
+        
+        render() {
+          return(
+            <button className="square" onClick={this.changeActive} isactive={this.state.isactive.toString()}></button>
+          );
+        }
+      }
+
+      class PixelArt extends React.Component {
         constructor(props) {
           super(props);
           this.state = { 
-            datetime: new Date(), 
+            squares: 5, 
           };
         }
 
-        setnow() {
-          this.setState(state => ({
-            datetime: new Date(),
-          }));
-        }
-
-        componentDidMount() {
-          this.interval = setInterval(() => this.setnow(), 1000);
-        }
-
-        componentWillUnmount() {
-          clearInterval(this.interval);
-        }
-
         render() {
-            return (
-                <div>now : {this.state.datetime.toString()}</div>
-            );
+          return(
+            <div className="board">
+              <form>
+                <label>幅 : </label>
+                <input type="number" name="squares" value={this.state.squares} min="5" max="20" 
+                  onChange={(e) => this.setState({squares: parseInt(e.target.value)})}/>
+              </form>
+            {
+              Array(this.state.squares).fill(0).map((val, i) => {
+                return (
+                  <div className="board-row">
+                  {
+                    Array(this.state.squares).fill(0).map((val2, j) => {
+                      return(
+                        <Square key={String(i) + String(j)}/>
+                      )
+                    })
+                  }
+                  </div>
+                );
+              })
+            }  
+            </div>
+          );
         }
       }
 
       ReactDOM.render(
-        <Timer />,
+        <PixelArt />,
         document.getElementById('row1')
       );
 
