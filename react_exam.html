@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>React練習ページ</title>
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
@@ -8,6 +9,7 @@
   </head>
   <body>
     <div id="row1"></div>
+    <div id="row2"></div>
 
     <script type="text/babel">
 
@@ -99,6 +101,178 @@
       ReactDOM.render(
         <PixelArt />,
         document.getElementById('row1')
+      );
+
+
+      const PRODUCTS = [
+        {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
+        {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
+        {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
+        {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
+        {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
+        {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
+      ];
+
+      class ProductCategoryRow extends React.Component {
+        render() {
+          return (
+            <tr>
+              <th colSpan="2">
+                {this.props.category}
+              </th>
+            </tr>
+          );
+        }
+      }
+
+      class ProductRow extends React.Component {
+        render() {
+          const product = this.props.product;
+          const name = product.stocked ?
+            product.name :
+            <span style={{color : 'red'}}>
+              {product.name}
+            </span>
+
+          return (
+            <tr>
+              <td>{name}</td>
+              <td>{product.price}</td>
+            </tr>
+          );
+        }
+      }
+
+      class ProductTable extends React.Component {
+        render() {
+          const filterText = this.props.filterText;
+          const isStockOnly = this.props.isStockOnly;
+
+          const rows = [];
+          let lastCategory = null;
+
+          this.props.products.forEach(product => {
+            
+            if (product.name.indexOf(filterText) === -1) {
+              return;
+            }
+
+            if (isStockOnly && !product.stocked) {
+              return;
+            }
+
+            if (product.category !== lastCategory) {
+              rows.push(
+                <ProductCategoryRow 
+                  category={product.category} 
+                  key={product.category} />
+              );
+            }
+
+            rows.push(
+              <ProductRow 
+                product={product}
+                key={product.name} />
+            );
+
+            lastCategory = product.category;
+          }); 
+
+          if (rows.length == 0) {
+            rows.push(
+              <tr key={new Date()}>
+                <th style={{color: 'red'}} colSpan="2">Sorry, there is no such products.</th>
+              </tr>
+            );
+          }
+
+          return (
+            <table className="products-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </table>
+          );
+        }
+      }
+
+      class SearchBar extends React.Component {
+        constructor(props) {
+          super(props);
+          this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+          this.handleIsStockOnlyChange = this.handleIsStockOnlyChange.bind(this);
+        }
+
+        render() {
+          return (
+            <form>
+              <input type="text" placeholder="Search..." value={this.props.filterText} onChange={this.handleFilterTextChange} />
+              <p>
+                <input type="checkbox" id="IfShowOnlyStocked" checked={this.props.isStockOnly} onChange={this.handleIsStockOnlyChange} />
+                {' '}
+                Only show products in stock
+              </p>
+            </form>
+          );
+        }
+
+        handleFilterTextChange(e) {
+          this.props.onFilterTextChange(e.target.value);
+        }
+
+        handleIsStockOnlyChange(e) {
+          this.props.onStockOnlyChange(e.target.checked);
+        }
+      }
+
+      class FilterableProductTable extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            filterText: '',
+            isStockOnly: false,
+          }
+          this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+          this.handleIsStockOnlyChange = this.handleIsStockOnlyChange.bind(this);
+        }
+
+        render() {
+          return (
+            <div>
+              <SearchBar 
+                filterText={this.state.filterText}
+                isStockOnly={this.state.isStockOnly}
+                onFilterTextChange={this.handleFilterTextChange}
+                onStockOnlyChange={this.handleIsStockOnlyChange} />
+
+              <ProductTable 
+                products={PRODUCTS}
+                filterText={this.state.filterText}
+                isStockOnly={this.state.isStockOnly}/>
+            </div>
+          );
+        }
+
+        handleFilterTextChange(filterText) {
+          this.setState({
+            filterText: filterText,
+          });
+        }
+
+        handleIsStockOnlyChange(isStockOnly) {
+          this.setState({
+            isStockOnly: isStockOnly,
+          });
+        }
+      }
+
+      ReactDOM.render(
+        <FilterableProductTable />,
+        document.getElementById("row2")
       );
 
     </script>
